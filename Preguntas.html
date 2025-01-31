@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo.png">
+
+
+    <title>Quiz de Fútbol</title>
+    <style>
+    body{
+        background: rgb(56,0,0);
+        background: linear-gradient(90deg, rgba(56,0,0,1) 0%, rgba(0,0,0,1) 100%);
+        font-family: "Oswald", serif;
+    }        #quiz-container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); }
+        .question { font-size: 20px; margin-bottom: 10px; }
+        .option { display: block; margin: 10px 0; padding: 10px; background: #007BFF; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        .option:hover { background: #0056b3; }
+        #result { font-size: 18px; margin-top: 20px; }
+        a{
+    color: white;
+}
+ul{
+        color: white;
+        font-size: 1.5rem;
+    }
+.Juego{
+    text-align: center;
+    color: white;
+}
+    </style>
+</head>
+<body>
+
+    <h1><a href="index.html"> LALIGA</a></h1>
+    <nav>
+        <ul><a href="equipos.html">Equipos</a></ul>
+        <ul><a href="Rankings.html">Rankings</a></ul>
+        <ul><a href="Preguntas.html">Juego</a></ul>
+        <ul><a href="Historia.html">Historia</a></ul>
+        <ul><a href="Cuotas.html">Cuotas</a></ul>
+    </nav>
+
+    <h2 class="Juego">JUEGO</h2>
+    <div id="quiz-container">
+        <h2>Quiz de Fútbol</h2>
+        <p class="question" id="question"></p>
+        <div id="options"></div>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "¿Quién es el máximo goleador histórico de LaLiga?", options: ["Cristiano Ronaldo", "Lionel Messi", "Raúl González", "Telmo Zarra"], answer: "Lionel Messi" },
+            { question: "¿Cuántas Champions League ha ganado el Real Madrid?", options: ["10", "12", "15", "16"], answer: "15" },
+            { question: "¿En qué año se fundó el FC Barcelona?", options: ["1888", "1899", "1905", "1923"], answer: "1899" }
+        ];
+        
+        let currentQuestion = 0;
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            q.options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option;
+                button.classList.add("option");
+                button.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(button);
+            });
+        }
+        
+        function checkAnswer(selected) {
+            const result = document.getElementById("result");
+            if (selected === questions[currentQuestion].answer) {
+                result.innerText = "✅ ¡Correcto!";
+                result.style.color = "green";
+            } else {
+                result.innerText = "❌ Incorrecto, la respuesta era: " + questions[currentQuestion].answer;
+                result.style.color = "red";
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                    result.innerText = "";
+                } else {
+                    result.innerText = "🎉 ¡Quiz terminado!";
+                }
+            }, 2000);
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
